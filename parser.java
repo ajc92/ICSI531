@@ -4,15 +4,27 @@ public class parser
 {
 	public static void main(String[] args)
 	{
-		System.out.println("here");
-		String line, filename = "/home/aaron/Programing/CSI531/Project/tweets", delims = " ,.?!#&();:", word;
+		String line, delims = " ,.?!#&();:", word;
 		int hot = 0, cold = 0, rainy = 0, snowy = 0, humid = 0, freezing = 0, sunny = 0, windy = 0, cloudy = 0, sleet = 0, ice = 0;
-		File file = new File("/home/aaron/Programing/CSI531/Project/tweets/la_totals.txt");
-		file.createNewFile();
-		PrintWriter writer =  new PrintWriter("/home/aaron/Programing/CSI531/Project/tweets/la_totals.txt");
+		File directory = new File("tweet_data");
+		if (!directory.exists())
+		{
+			directory.mkdir();
+		}
+		File outfile = new File("tweet_data/san_juan.data");
+		File infile = new File("tweets/san_juan_tweets.txt");
 		try
 		{
-			BufferedReader reader = new BufferedReader(new FileReader(filename));
+			outfile.createNewFile();
+		}
+		catch (IOException e)
+		{
+			System.err.format("Exception occured trying to create '%s'.", infile);
+			e.printStackTrace();
+		}
+		try
+		{
+			BufferedReader reader = new BufferedReader(new FileReader(infile));
 			while ((line = reader.readLine()) != null)
 			{
 				StringTokenizer st = new StringTokenizer(line, delims);
@@ -69,21 +81,30 @@ public class parser
 		}
 		catch (Exception e)
 		{
-			System.err.format("Exception occured trying to read '%s'.", filename);
+			System.err.format("Exception occured trying to read '%s'.", infile);
 			e.printStackTrace();
 			//System.exit(0);
 		}
-		writer.write("hot,%d" + String.valueOf(hot));
-		writer.write("cold,%d" + String.valueOf(cold));
-		writer.write("rainy,%d" + String.valueOf(rainy));
-		writer.write("snowy,%d" + String.valueOf(snowy));
-		writer.write("humid,%d" + String.valueOf(humid));
-		writer.write("freezing,%d" + String.valueOf(freezing));
-		writer.write("sunny,%d" + String.valueOf(sunny));
-		writer.write("windy,%d" + String.valueOf(windy));
-		writer.write("cloudy,%d" + String.valueOf(cloudy));
-		writer.write("sleet,%d" + String.valueOf(sleet));
-		writer.write("ice,%d" + String.valueOf(ice));
-		writer.close();
+		try
+		{
+			PrintWriter writer =  new PrintWriter(outfile);
+			writer.write("hot," + String.valueOf(hot) + "\n");
+			writer.write("cold," + String.valueOf(cold) + "\n");
+			writer.write("rainy," + String.valueOf(rainy) + "\n");
+			writer.write("snowy," + String.valueOf(snowy) + "\n");
+			writer.write("humid," + String.valueOf(humid) + "\n");
+			writer.write("freezing," + String.valueOf(freezing) + "\n");
+			writer.write("sunny," + String.valueOf(sunny) + "\n");
+			writer.write("windy," + String.valueOf(windy) + "\n");
+			writer.write("cloudy," + String.valueOf(cloudy) + "\n");
+			writer.write("sleet," + String.valueOf(sleet) + "\n");
+			writer.write("ice," + String.valueOf(ice) + "\n");
+			writer.close();
+		}
+		catch (FileNotFoundException e)
+		{
+			System.err.format("Exception occured trying to open '%s'.", infile);
+			e.printStackTrace();
+		}
 	}
 }
