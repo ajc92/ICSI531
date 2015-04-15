@@ -67,6 +67,10 @@ def main():
 	query3()
 	query4()
 	pass
+	os.chdir("..")
+	os.system("javac parser.java")
+	os.system("java parser")
+	os.system("python weather_histogram.py")
 
 if __name__ == '__main__':
 	main()

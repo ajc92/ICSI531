@@ -11,8 +11,8 @@ public class parser
 		{
 			directory.mkdir();
 		}
-		File outfile = new File("tweet_data/san_juan.data");
-		File infile = new File("tweets/san_juan_tweets.txt");
+		File outfile = new File("tweet_data/antalya.data");
+		File infile = new File("tweets/antalya_tweets.txt");
 		try
 		{
 			outfile.createNewFile();
